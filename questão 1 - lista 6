@@ -1,0 +1,62 @@
+--CREATE DATABASE "MC"
+CREATE TABLE professor(
+	matricula INT NOT NULL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	data_nascimento DATE,
+    rua VARCHAR(150) NOT NULL,
+	numero INT,
+	bairro VARCHAR(150) );
+    
+INSERT INTO professor(matricula, nome, data_nascimento, rua, numero, bairro) VALUES
+	(789654, 'felicia', '20/10/1980', 'rua 5', 19, 'dinamerica'),
+	(999999, 'pablo', '18/01/1980', 'rua 6', 20, 'dinamerica'),
+	(777777, 'ingrid', '15/03/1980', 'rua 7', 21, 'dinamerica'),
+	(654321, 'Marcelo', '08/10/1980', 'rua 8', 22, 'dinamerica');
+
+CREATE TABLE aluno(
+	matricula INT NOT NULL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	data_nascimento DATE,
+    rua VARCHAR(150) NOT NULL,
+	numero INT,
+	bairro VARCHAR(150) );
+    
+INSERT INTO aluno(matricula, nome, data_nascimento, rua, numero, bairro) VALUES
+	(123456, 'maria', '18/10/1997', 'rua 1', 19, 'dinamerica'),
+	(999999, 'josé', '17/09/1997', 'rua 2', 20, 'dinamerica'),
+	(777777, 'joão', '14/08/1997', 'rua 3', 21, 'dinamerica'),
+	(654321, 'rosa', '08/10/1997', 'rua 3', 22, 'dinamerica');
+
+CREATE TABLE disciplina(
+	codigo INT NOT NULL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	carga_horaria INTEGER );
+    
+INSERT INTO disciplina(codigo, nome, carga_horara) VALUES
+	(01, 'banco de dados', 80),
+	(02, 'POO', 80);
+
+CREATE TABLE professor_disciplina(
+	matricula_prof INTEGER NOT NULL FOREIGN KEY (matricula_prof) 
+	REFERENCES prof(matricula),
+	codigo_disc INTEGER NOT NULL FOREIGN KEY (codigo_disc) 
+	REFERENCES disciplina(codigo);
+    
+INSERT INTO professor_disciplina(matricula_prof, codigo_disc) VALUES
+	(789654, 01),
+	(888888, 02);
+
+CREATE TABLE aluno_prof_disc(
+	matricula_aluno INTEGER NOT NULL FOREIGN KEY (matricula_aluno) 
+	REFERENCES aluno(matricula),
+	matricula_prof INTEGER NOT NULL FOREIGN KEY (matricula_prof) 
+	REFERENCES prof(matricula),
+	codigo_disc INTEGER NOT NULL FOREIGN KEY (codigo_disc) 
+	REFERENCES disciplina(codigo),
+	nota DOUBLE PRECISION NOT NULL );
+    
+INSERT INTO aluno_prof_disc(matricula_aluno, matricula_prof, codigo_disc, nota) VALUES
+	(123456, 789654, 01, 80),
+	(123456, 888888, 02, 70),
+	(999999, 789654, 01, 50),
+	(999999, 888888, 02, 100);
