@@ -1,4 +1,4 @@
---CREATE DATABASE "MC"
+CREATE DATABASE "MC"
 CREATE TABLE professor(
 	matricula INT NOT NULL PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
@@ -37,21 +37,21 @@ INSERT INTO disciplina(codigo, nome, carga_horara) VALUES
 	(02, 'POO', 80);
 
 CREATE TABLE professor_disciplina(
-	matricula_prof INTEGER NOT NULL FOREIGN KEY (matricula_prof) 
+	matricula_prof INTEGER NOT NULL, FOREIGN KEY (matricula_prof) 
 	REFERENCES prof(matricula),
-	codigo_disc INTEGER NOT NULL FOREIGN KEY (codigo_disc) 
-	REFERENCES disciplina(codigo);
+	codigo_disc INTEGER NOT NULL, FOREIGN KEY (codigo_disc) 
+	REFERENCES disciplina(codigo));
     
 INSERT INTO professor_disciplina(matricula_prof, codigo_disc) VALUES
 	(789654, 01),
 	(888888, 02);
 
 CREATE TABLE aluno_prof_disc(
-	matricula_aluno INTEGER NOT NULL FOREIGN KEY (matricula_aluno) 
+	matricula_aluno INTEGER NOT NULL, FOREIGN KEY (matricula_aluno) 
 	REFERENCES aluno(matricula),
-	matricula_prof INTEGER NOT NULL FOREIGN KEY (matricula_prof) 
+	matricula_prof INTEGER NOT NULL, FOREIGN KEY (matricula_prof) 
 	REFERENCES prof(matricula),
-	codigo_disc INTEGER NOT NULL FOREIGN KEY (codigo_disc) 
+	codigo_disc INTEGER NOT NULL, FOREIGN KEY (codigo_disc) 
 	REFERENCES disciplina(codigo),
 	nota DOUBLE PRECISION NOT NULL );
     
@@ -59,4 +59,24 @@ INSERT INTO aluno_prof_disc(matricula_aluno, matricula_prof, codigo_disc, nota) 
 	(123456, 789654, 01, 80),
 	(123456, 888888, 02, 70),
 	(999999, 789654, 01, 50),
-	(999999, 888888, 02, 100);
+	(999999, 888888, 02, 100); 
+    
+ALTER TABLE professor
+	ADD COLUMN cargo VARCHAR(50) not null
+	default 'servidor';	
+    
+UPDATE professor
+SET cargo= 'mestre'
+WHERE nome = 'pablo' 
+    
+UPDATE professor
+	SET salario = 6000
+	WHERE salario = 6;	
+    
+UPDATE professor
+SET salario = salario + 2000
+WHERE cargo = 'mestre';
+
+UPDATE professor
+SET salario = salario + 3500
+WHERE cargo = 'doutor';
